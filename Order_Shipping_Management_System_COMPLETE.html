@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Order & Shipping Management</title>
+<style>
+:root{--nav:#17243a;--blue:#2477f5;--bg:#f4f7fb;--text:#182230;--muted:#748094;--line:#e4e9f1;--green:#19b878;--orange:#f5a623;--purple:#8a6ff0;--red:#ef5b63}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,"Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text)}
+button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}.app{display:flex;min-height:100vh}.sidebar{width:245px;background:var(--nav);color:#fff;padding:18px 12px;position:sticky;top:0;height:100vh}.brand{display:flex;gap:10px;align-items:center;padding:8px 10px 20px;font-size:20px;font-weight:700}.logo{font-size:32px}.nav{display:flex;flex-direction:column;gap:5px}.nav button{background:transparent;color:#dce5f4;text-align:left;padding:12px 14px;border-radius:10px;font-size:15px}.nav button:hover,.nav button.active{background:#2778ef;color:white}.main{flex:1;padding:18px 22px;min-width:0}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:16px}.search{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;width:min(600px,60vw)}.datebox{background:#fff;border:1px solid var(--line);padding:10px 14px;border-radius:10px}.cards{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:16px}.card{background:#fff;border-radius:12px;padding:15px;border:1px solid var(--line)}.card b{display:block;font-size:26px;margin-top:7px}.card small{color:var(--muted)}.blue{border-top:4px solid #5b9cff}.green{border-top:4px solid var(--green)}.orange{border-top:4px solid var(--orange)}.purple{border-top:4px solid var(--purple)}.red{border-top:4px solid var(--red)}.content{display:grid;grid-template-columns:minmax(560px,1.5fr) minmax(380px,1fr);gap:16px}.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}.panelhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.panel h2{margin:0;font-size:19px}.btn{padding:10px 14px;border-radius:9px;background:#eef3fb;color:#334155}.btn.primary{background:var(--blue);color:white}.btn.success{background:var(--green);color:white}.btn.warn{background:var(--orange);color:white}.btn.danger{background:var(--red);color:white}.btn.small{padding:7px 9px;font-size:13px}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.tabs button{padding:8px 12px;background:#f0f3f8;border-radius:8px}.tabs button.active{background:var(--blue);color:#fff}.tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse;font-size:14px}.table th,.table td{padding:10px 8px;border-bottom:1px solid #edf0f5;text-align:left;white-space:nowrap}.table th{color:#697586;background:#fafbfc}.status{display:inline-block;padding:5px 9px;border-radius:7px;font-size:12px;font-weight:700}.s-new{background:#ffe6e8;color:#d53e4a}.s-pick{background:#e5f7ed;color:#0d9660}.s-packed{background:#fff2cf;color:#a56a00}.s-ready{background:#e4f0ff;color:#1769c2}.s-shipped{background:#eee8ff;color:#6545c8}.s-done{background:#dff8ef;color:#09835a}.detail{position:sticky;top:18px;align-self:start}.detailtop{display:flex;justify-content:space-between;gap:10px}.kv{display:grid;grid-template-columns:80px 1fr;gap:8px;font-size:14px}.kv span:nth-child(odd){color:var(--muted)}.box{border:1px solid var(--line);border-radius:10px;padding:12px;margin-top:12px}.amount{display:grid;grid-template-columns:1fr auto;gap:7px}.balance{font-size:18px;font-weight:800;color:var(--red)}.steps{display:flex;align-items:center;gap:5px;margin-top:14px}.step{flex:1;text-align:center;font-size:11px;color:#8792a2}.step i{display:block;width:18px;height:18px;border-radius:50%;background:#d8dee8;margin:0 auto 5px}.step.on{color:#1469d6;font-weight:700}.step.on i{background:#2477f5}.media{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.media .item{position:relative;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fafafa;min-height:92px}.media img,.media video{width:100%;height:95px;object-fit:cover;display:block}.media .cap{font-size:11px;padding:5px}.media .del{position:absolute;right:4px;top:4px;background:#0009;color:#fff;border-radius:5px;padding:2px 5px}.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.field label{display:block;font-size:13px;color:#667085;margin-bottom:5px}.field input,.field select,.field textarea{width:100%;padding:10px;border:1px solid #dce2eb;border-radius:8px;background:#fff}.field.full{grid-column:1/-1}.modal{position:fixed;inset:0;background:#0007;display:none;align-items:center;justify-content:center;padding:20px;z-index:20}.modal.show{display:flex}.modalbox{background:#fff;width:min(760px,96vw);max-height:92vh;overflow:auto;border-radius:14px;padding:18px}.modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.empty{text-align:center;color:#8994a5;padding:40px}.footeractions{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}.notice{background:#fff8df;border:1px solid #ffe3a2;padding:10px;border-radius:9px;font-size:13px;color:#795c00;margin-top:10px}.hide{display:none!important}
+@media(max-width:1100px){.cards{grid-template-columns:repeat(3,1fr)}.content{grid-template-columns:1fr}.detail{position:static}.sidebar{width:190px}}
+@media(max-width:760px){.sidebar{width:70px}.brand span,.nav button span{display:none}.nav button{text-align:center}.main{padding:10px}.cards{grid-template-columns:repeat(2,1fr)}.content{grid-template-columns:1fr}.formgrid{grid-template-columns:1fr}.search{width:100%}.top{flex-direction:column;align-items:stretch}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="logo">📦</div><span>Order & Shipping<br>Management</span></div>
+  <div class="nav">
+    <button data-page="dashboard" class="active">🏠 <span>首页</span></button>
+    <button data-page="new">➕ <span>新订单</span></button>
+    <button data-page="orders">📋 <span>所有订单</span></button>
+    <button data-page="customers">👥 <span>顾客资料</span></button>
+    <button data-page="products">📦 <span>商品管理</span></button>
+    <button data-page="media">🖼️ <span>照片 / 视频库</span></button>
+    <button data-page="shipping">🚚 <span>快递 / Tracking</span></button>
+    <button data-page="reports">📊 <span>报告 / 统计</span></button>
+    <button data-page="settings">⚙️ <span>设置</span></button>
+  </div>
+</aside>
+<main class="main">
+  <div class="top">
+    <input id="globalSearch" class="search" placeholder="🔍 搜索订单号、顾客名字、电话、Tracking No.">
+    <div class="datebox">📅 <b id="today"></b></div>
+  </div>
+  <div id="page"></div>
+</main>
+</div>
+
+<div id="modal" class="modal"><div class="modalbox"><div class="modalhead"><h2 id="modalTitle"></h2><button class="btn" onclick="closeModal()">✕</button></div><div id="modalBody"></div></div></div>
+
+<script>
+const KEY='order_ship_system_v1';
+let db=JSON.parse(localStorage.getItem(KEY)||'null')||{orders:[],customers:[],products:[],selected:null};
+const STATUSES=[
+ ['new','待处理','s-new'],['picking','拣货中','s-pick'],['packed','已包装','s-packed'],['ready','待寄货','s-ready'],['shipped','已寄出','s-shipped'],['done','已完成','s-done']
+];
+function save(){localStorage.setItem(KEY,JSON.stringify(db))}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function money(n){return 'RM'+Number(n||0).toFixed(2)}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function statusInfo(s){return STATUSES.find(x=>x[0]===s)||STATUSES[0]}
+function nowDate(){return new Date().toISOString().slice(0,10)}
+function todayText(){let d=new Date();return d.toLocaleDateString('zh-CN',{year:'numeric',month:'2-digit',day:'2-digit',weekday:'short'})}
+document.getElementById('today').textContent=todayText();
+
+function seed(){
+ if(db.orders.length) return;
+ db.products=[{id:uid(),name:'USB Cable',price:20},{id:uid(),name:'Phone Case',price:25},{id:uid(),name:'Power Bank',price:50},{id:uid(),name:'Charger',price:35}];
+ db.customers=[{id:uid(),name:'Amy',phone:'012-345 6789',address:'No. 123, Jalan ABC, Taman Maju, 81100 Johor Bahru'}];
+ db.orders=[
+  {id:uid(),no:'ORD-0001',date:nowDate(),customer:'Amy',phone:'012-345 6789',address:'No. 123, Jalan ABC, Taman Maju, 81100 Johor Bahru',items:[{name:'USB Cable',qty:2,price:20}],shipping:8,paid:30,status:'new',courier:'',tracking:'',media:[],note:'已检查数量，等待处理。'},
+  {id:uid(),no:'ORD-0002',date:nowDate(),customer:'Lisa',phone:'012-111 2222',address:'Johor Bahru',items:[{name:'Phone Case',qty:1,price:25}],shipping:8,paid:33,status:'packed',courier:'',tracking:'',media:[],note:''},
+  {id:uid(),no:'ORD-0003',date:nowDate(),customer:'Ken',phone:'012-222 3333',address:'Kuala Lumpur',items:[{name:'Power Bank',qty:3,price:50}],shipping:12,paid:162,status:'ready',courier:'DHL',tracking:'',media:[],note:''},
+  {id:uid(),no:'ORD-0004',date:nowDate(),customer:'Cindy',phone:'012-333 4444',address:'Penang',items:[{name:'USB Cable',qty:1,price:20}],shipping:8,paid:28,status:'shipped',courier:'DHL',tracking:'DHL123456789',media:[],note:''},
+  {id:uid(),no:'ORD-0005',date:nowDate(),customer:'Mei',phone:'012-444 5555',address:'Melaka',items:[{name:'Phone Case',qty:2,price:25}],shipping:8,paid:58,status:'done',courier:'J&T',tracking:'JT99887766',media:[],note:''}
+ ];
+ db.selected=db.orders[0].id;save();
+}
+seed();
+
+function total(o){return o.items.reduce((a,x)=>a+x.qty*x.price,0)+Number(o.shipping||0)}
+function renderDashboard(){
+ let counts={new:0,picking:0,packed:0,ready:0,shipped:0,done:0};db.orders.forEach(o=>counts[o.status]=(counts[o.status]||0)+1);
+ return `<div class="cards">
+ <div class="card blue"><small>今日订单</small><b>${db.orders.filter(o=>o.date===nowDate()).length}</b></div>
+ <div class="card green"><small>待处理 / 拣货</small><b>${counts.new+counts.picking}</b></div>
+ <div class="card orange"><small>已包装</small><b>${counts.packed}</b></div>
+ <div class="card blue"><small>待寄货</small><b>${counts.ready}</b></div>
+ <div class="card purple"><small>已寄出</small><b>${counts.shipped}</b></div>
+ <div class="card green"><small>已完成</small><b>${counts.done}</b></div></div>
+ <div class="content"><div class="panel"><div class="panelhead"><h2>所有订单</h2><div><button class="btn" onclick="bulkStatus()">批量改状态</button> <button class="btn danger" onclick="bulkDelete()">批量删除</button> <button class="btn primary" onclick="openNewOrder()">＋ 新增订单</button></div></div>${orderTable('all')}</div><div id="detailPanel"></div></div>`;
+}
+function orderTable(filter='all'){
+ let q=document.getElementById('globalSearch')?.value.toLowerCase()||'';
+ let arr=db.orders.filter(o=>{
+  if(filter!=='all' && o.status!==filter)return false;
+  let s=(o.no+' '+o.customer+' '+o.phone+' '+o.tracking).toLowerCase();return s.includes(q);
+ });
+ if(!arr.length)return '<div class="empty">没有符合条件的订单</div>';
+ return `<div class="tabs">${[['all','全部'],...STATUSES].map(x=>`<button class="${filter===x[0]?'active':''}" onclick="showOrders('${x[0]}')">${x[1]} (${x[0]==='all'?db.orders.length:(db.orders.filter(o=>o.status===x[0]).length)})</button>`).join('')}</div>
+ <div class="tablewrap"><table class="table"><thead><tr><th><input type="checkbox" onclick="toggleAll(this)"></th><th>订单号</th><th>日期</th><th>顾客</th><th>商品</th><th>数量</th><th>总额</th><th>状态</th><th></th></tr></thead><tbody>
+ ${arr.map(o=>{let si=statusInfo(o.status);return `<tr onclick="selectOrder('${o.id}')"><td onclick="event.stopPropagation()"><input class="order-check" type="checkbox" value="${o.id}"></td><td>${esc(o.no)}</td><td>${esc(o.date)}</td><td>${esc(o.customer)}</td><td>${esc(o.items.map(i=>i.name).join(', '))}</td><td>${o.items.reduce((a,i)=>a+i.qty,0)}</td><td>${money(total(o))}</td><td><span class="status ${si[2]}">${si[1]}</span></td><td><button class="btn small" onclick="event.stopPropagation();editOrder('${o.id}')">编辑</button></td></tr>`}).join('')}
+ </tbody></table></div>`;
+}
+function detail(o){
+ if(!o)return '<div class="panel detail"><div class="empty">请选择一个订单</div></div>';
+ let si=statusInfo(o.status),bal=total(o)-Number(o.paid||0);
+ return `<div class="panel detail"><div class="detailtop"><div><h2>${esc(o.no)} <span class="status ${si[2]}">${si[1]}</span></h2><small>下单日期：${esc(o.date)}</small></div><button class="btn" onclick="editOrder('${o.id}')">✎ 编辑</button></div>
+ <div class="box"><h3>👤 顾客资料</h3><div class="kv"><span>姓名</span><b>${esc(o.customer)}</b><span>电话</span><span>${esc(o.phone)}</span><span>地址</span><span>${esc(o.address)}</span></div></div>
+ <div class="box"><h3>📦 订单资料</h3><div class="amount">${o.items.map(i=>`<span>${esc(i.name)} × ${i.qty}</span><span>${money(i.qty*i.price)}</span>`).join('')}<span>运费</span><span>${money(o.shipping)}</span><b>总金额</b><b>${money(total(o))}</b><span>已付款</span><span>${money(o.paid)}</span><span class="balance">余额</span><span class="balance">${money(bal)}</span></div></div>
+ <div class="steps">${STATUSES.map(x=>`<div class="step ${STATUSES.findIndex(y=>y[0]===o.status)>=STATUSES.findIndex(y=>y[0]===x[0])?'on':''}"><i></i>${x[1]}</div>`).join('')}</div>
+ <div class="box"><div class="panelhead"><h3>🖼️ 订单照片 / 视频 (${o.media.length})</h3><div><button class="btn small" onclick="uploadMedia('${o.id}','image')">＋ 上传照片</button><button class="btn small" onclick="uploadMedia('${o.id}','video')">＋ 上传视频</button></div></div>
+ <div class="media">${o.media.map((m,i)=>`<div class="item">${m.type==='image'?`<img src="${m.data}">`:`<video src="${m.data}" controls></video>`}<button class="del" onclick="deleteMedia('${o.id}',${i})">×</button><div class="cap">${esc(m.name)}<br><button class="btn small" onclick="renameMedia('${o.id}',${i})">编辑名称</button></div></div>`).join('')}${o.media.length?'':'<div class="empty" style="grid-column:1/-1;padding:20px">还没有照片或视频</div>'}</div></div>
+ <div class="box"><h3>🚚 寄货信息</h3><div class="formgrid"><div class="field"><label>快递公司</label><input id="courier_${o.id}" value="${esc(o.courier)}" placeholder="DHL / J&T / Pos Laju"></div><div class="field"><label>Tracking No.</label><input id="track_${o.id}" value="${esc(o.tracking)}" placeholder="邮寄编号"></div></div><div class="footeractions"><button class="btn primary" onclick="saveShipping('${o.id}')">保存寄货资料</button></div></div>
+ <div class="box"><h3>📝 备注</h3><textarea id="note_${o.id}" rows="3" style="width:100%;padding:10px;border:1px solid #dce2eb;border-radius:8px">${esc(o.note)}</textarea><div class="footeractions"><button class="btn" onclick="saveNote('${o.id}')">保存备注</button></div></div>
+ <div class="footeractions">${actionButtons(o)}<button class="btn danger" onclick="deleteOrder('${o.id}')">🗑️ 删除订单</button></div></div>`;
+}
+function actionButtons(o){
+ let idx=STATUSES.findIndex(x=>x[0]===o.status), out='';
+ out+=`<button class="btn" onclick="editOrder('${o.id}')">✎ 编辑订单</button>`;
+ out+=`<button class="btn" onclick="duplicateOrder('${o.id}')">⧉ 复制订单</button>`;
+ out+=`<button class="btn" onclick="changeStatus('${o.id}')">⚙️ 修改状态</button>`;
+ out+=`<button class="btn" onclick="editPayment('${o.id}')">💳 修改付款</button>`;
+ if(idx<STATUSES.length-1)out+=`<button class="btn primary" onclick="advance('${o.id}')">${STATUSES[idx+1][1]} →</button>`;
+ if(o.status==='ready')out+=`<button class="btn success" onclick="markShipped('${o.id}')">🚚 标记为已寄出</button>`;
+ if(o.status==='shipped')out+=`<button class="btn success" onclick="advance('${o.id}')">✓ 标记为已完成</button>`;
+ return out;
+}
+function render(page='dashboard'){
+ document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
+ let el=document.getElementById('page');
+ if(page==='dashboard'){el.innerHTML=renderDashboard();renderSelectedDetail()}
+ else if(page==='new'){el.innerHTML=`<div class="panel"><h2>➕ 新订单</h2><div class="notice">填写后按「保存订单」，系统会自动产生 Order No.；资料会保存在此浏览器。</div>${newForm()}</div>`}
+ else if(page==='orders'){el.innerHTML=`<div class="panel"><div class="panelhead"><h2>📋 所有订单</h2><button class="btn primary" onclick="openNewOrder()">＋ 新增订单</button></div>${orderTable('all')}</div>`}
+ else if(page==='customers'){el.innerHTML=customerPage()}
+ else if(page==='products'){el.innerHTML=productPage()}
+ else if(page==='media'){el.innerHTML=mediaPage()}
+ else if(page==='shipping'){el.innerHTML=shippingPage()}
+ else if(page==='reports'){el.innerHTML=reportPage()}
+ else if(page==='settings'){el.innerHTML=settingsPage()}
+}
+function renderSelectedDetail(){document.getElementById('detailPanel').outerHTML=detail(db.orders.find(o=>o.id===db.selected)).replace('class="panel detail"','id="detailPanel" class="panel detail"')}
+function newForm(o=null){
+ o=o||{customer:'',phone:'',address:'',shipping:0,paid:0,items:[{name:'',qty:1,price:0}],note:'',courier:'',tracking:'',status:'new'};
+ return `<div class="formgrid">
+ <div class="field"><label>顾客名字 *</label><input id="f_customer" value="${esc(o.customer)}"></div>
+ <div class="field"><label>电话</label><input id="f_phone" value="${esc(o.phone)}"></div>
+ <div class="field full"><label>地址 *</label><textarea id="f_address" rows="2">${esc(o.address)}</textarea></div>
+ <div class="field full"><label>商品（每行：商品名 | 数量 | 单价）</label><textarea id="f_items" rows="5">${o.items.map(i=>`${i.name} | ${i.qty} | ${i.price}`).join('\\n')}</textarea></div>
+ <div class="field"><label>运费 RM</label><input id="f_shipping" type="number" step=".01" value="${o.shipping||0}"></div>
+ <div class="field"><label>已付款 RM</label><input id="f_paid" type="number" step=".01" value="${o.paid||0}"></div>
+ <div class="field"><label>快递公司</label><input id="f_courier" value="${esc(o.courier)}"></div>
+ <div class="field"><label>Tracking No.</label><input id="f_tracking" value="${esc(o.tracking)}"></div>
+ <div class="field full"><label>备注</label><textarea id="f_note" rows="3">${esc(o.note)}</textarea></div>
+ </div><div class="footeractions"><button class="btn" onclick="render('dashboard')">取消</button><button class="btn primary" onclick="saveOrderForm('${o.id||''}')">💾 保存订单</button></div>`;
+}
+function nextNo(){let nums=db.orders.map(o=>parseInt(o.no.replace(/\D/g,''))||0);return 'ORD-'+String((Math.max(0,...nums)+1)).padStart(4,'0')}
+function readForm(){
+ let items=document.getElementById('f_items').value.split('\\n').map(x=>x.trim()).filter(Boolean).map(line=>{let p=line.split('|').map(x=>x.trim());return {name:p[0]||'未命名',qty:Math.max(1,Number(p[1])||1),price:Number(p[2])||0}});
+ return {customer:document.getElementById('f_customer').value.trim(),phone:document.getElementById('f_phone').value.trim(),address:document.getElementById('f_address').value.trim(),items,shipping:Number(document.getElementById('f_shipping').value)||0,paid:Number(document.getElementById('f_paid').value)||0,courier:document.getElementById('f_courier').value.trim(),tracking:document.getElementById('f_tracking').value.trim(),note:document.getElementById('f_note').value.trim()};
+}
+function saveOrderForm(id){
+ let x=readForm();if(!x.customer||!x.address||!x.items.length){alert('请填写顾客名字、地址和至少一个商品');return}
+ if(id){let o=db.orders.find(x=>x.id===id);Object.assign(o,x)}else{let o={id:uid(),no:nextNo(),date:nowDate(),status:'new',media:[],...x};db.orders.unshift(o);db.selected=o.id}
+ save();render('dashboard');alert('订单已保存！')}
+function openNewOrder(){render('new')}
+function editOrder(id){let o=db.orders.find(x=>x.id===id);openModal('编辑订单 '+o.no,newForm(o))}
+function openModal(title,body){document.getElementById('modalTitle').textContent=title;document.getElementById('modalBody').innerHTML=body;document.getElementById('modal').classList.add('show')}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+function selectOrder(id){db.selected=id;save();render('dashboard')}
+
+function duplicateOrder(id){
+ let o=db.orders.find(x=>x.id===id); if(!o)return;
+ let copy=JSON.parse(JSON.stringify(o)); copy.id=uid();copy.no=nextNo();copy.date=nowDate();copy.status='new';copy.tracking='';copy.courier='';copy.media=[];copy.paid=0;copy.note='由 '+o.no+' 复制建立。';
+ db.orders.unshift(copy);db.selected=copy.id;save();render('dashboard');
+}
+function changeStatus(id){
+ let o=db.orders.find(x=>x.id===id);if(!o)return;
+ openModal('修改订单状态',`<div class="field"><label>状态</label><select id="status_select">${STATUSES.map(x=>`<option value="${x[0]}" ${o.status===x[0]?'selected':''}>${x[1]}</option>`).join('')}</select></div>
+ <div class="footeractions"><button class="btn primary" onclick="saveStatus('${id}')">保存状态</button></div>`);
+}
+function saveStatus(id){
+ let o=db.orders.find(x=>x.id===id);if(!o)return;
+ o.status=document.getElementById('status_select').value;save();closeModal();render('dashboard');
+}
+function editPayment(id){
+ let o=db.orders.find(x=>x.id===id);if(!o)return;
+ openModal('修改付款',`<div class="formgrid">
+ <div class="field"><label>总金额</label><input value="${total(o).toFixed(2)}" disabled></div>
+ <div class="field"><label>已付款 RM</label><input id="pay_edit" type="number" step=".01" value="${o.paid||0}"></div>
+ </div><div class="footeractions"><button class="btn primary" onclick="savePayment('${id}')">保存付款</button></div>`);
+}
+function savePayment(id){
+ let o=db.orders.find(x=>x.id===id);if(!o)return;
+ o.paid=Number(document.getElementById('pay_edit').value)||0;save();closeModal();render('dashboard');
+}
+
+function advance(id){let o=db.orders.find(x=>x.id===id),i=STATUSES.findIndex(x=>x[0]===o.status);if(i<STATUSES.length-1)o.status=STATUSES[i+1][0];save();render('dashboard')}
+function markShipped(id){let o=db.orders.find(x=>x.id===id);let tr=document.getElementById('track_'+id)?.value.trim();let co=document.getElementById('courier_'+id)?.value.trim();if(!tr){alert('请先输入 Tracking No.');return}o.tracking=tr;o.courier=co;o.status='shipped';save();render('dashboard')}
+
+function printOrder(id){
+ let o=db.orders.find(x=>x.id===id);if(!o)return;
+ let w=window.open('','_blank','width=800,height=900');
+ let rows=o.items.map(i=>`<tr><td>${esc(i.name)}</td><td>${i.qty}</td><td>RM${Number(i.price).toFixed(2)}</td><td>RM${Number(i.qty*i.price).toFixed(2)}</td></tr>`).join('');
+ w.document.write(`<html><head><title>${esc(o.no)}</title><style>body{font-family:Arial;padding:30px}table{width:100%;border-collapse:collapse}td,th{border:1px solid #ccc;padding:8px;text-align:left}.box{border:1px solid #ddd;padding:15px;margin:12px 0}</style></head><body><h1>Order ${esc(o.no)}</h1><div class="box"><b>Customer:</b> ${esc(o.customer)}<br><b>Phone:</b> ${esc(o.phone)}<br><b>Address:</b> ${esc(o.address)}</div><table><tr><th>Product</th><th>Qty</th><th>Unit</th><th>Amount</th></tr>${rows}</table><div class="box"><b>Shipping:</b> RM${Number(o.shipping||0).toFixed(2)}<br><b>Total:</b> RM${total(o).toFixed(2)}<br><b>Paid:</b> RM${Number(o.paid||0).toFixed(2)}<br><b>Balance:</b> RM${Math.max(0,total(o)-o.paid).toFixed(2)}<br><b>Courier:</b> ${esc(o.courier||'-')}<br><b>Tracking:</b> ${esc(o.tracking||'-')}</div><p>${esc(o.note||'')}</p><script>window.print()<\/script></body></html>`);
+ w.document.close();
+}
+
+function saveShipping(id){let o=db.orders.find(x=>x.id===id);o.courier=document.getElementById('courier_'+id).value.trim();o.tracking=document.getElementById('track_'+id).value.trim();save();render('dashboard');alert('寄货资料已保存')}
+function saveNote(id){let o=db.orders.find(x=>x.id===id);o.note=document.getElementById('note_'+id).value;save();alert('备注已保存')}
+function uploadMedia(id,type){let inp=document.createElement('input');inp.type='file';inp.accept=type==='image'?'image/*':'video/*';inp.multiple=true;inp.onchange=()=>{let files=[...inp.files];files.forEach(file=>{let r=new FileReader();r.onload=()=>{let o=db.orders.find(x=>x.id===id);o.media.push({type,data:r.result,name:file.name});save();render('dashboard')};r.readAsDataURL(file)});};inp.click()}
+function deleteMedia(id,i){if(confirm('确定删除这个文件吗？')){db.orders.find(x=>x.id===id).media.splice(i,1);save();render('dashboard')}}
+
+function renameMedia(id,i){
+ let o=db.orders.find(x=>x.id===id),m=o?.media[i]; if(!m)return;
+ let n=prompt('修改照片/视频名称：',m.name||'媒体文件');
+ if(n!==null && n.trim()){m.name=n.trim();save();render('dashboard');}
+}
+
+function deleteOrder(id){
+ let o=db.orders.find(x=>x.id===id); if(!o)return;
+ if(!confirm('确定要删除订单 '+o.no+' 吗？\n订单资料、照片和视频都会一起删除，此操作不能恢复。'))return;
+ db.orders=db.orders.filter(x=>x.id!==id);
+ db.selected=db.orders[0]?.id||null;
+ save();render('dashboard');
+}
+function deleteSelected(){if(db.selected)deleteOrder(db.selected);else alert('请先选择一个订单');}
+
+function checkedIds(){return [...document.querySelectorAll('.order-check:checked')].map(x=>x.value)}
+function toggleAll(el){document.querySelectorAll('.order-check').forEach(x=>x.checked=el.checked)}
+function bulkStatus(){
+ let ids=checkedIds();if(!ids.length)return alert('请先勾选订单');
+ openModal('批量修改状态',`<div class="field"><label>状态</label><select id="bulk_status">${STATUSES.map(x=>`<option value="${x[0]}">${x[1]}</option>`).join('')}</select></div><div class="footeractions"><button class="btn primary" onclick="saveBulkStatus()">保存</button></div>`);
+}
+function saveBulkStatus(){
+ let s=document.getElementById('bulk_status').value,ids=checkedIds();db.orders.forEach(o=>{if(ids.includes(o.id))o.status=s});save();closeModal();render('orders');
+}
+function bulkDelete(){
+ let ids=checkedIds();if(!ids.length)return alert('请先勾选订单');
+ if(confirm('确定删除选中的 '+ids.length+' 个订单吗？照片和视频也会一起删除。')){db.orders=db.orders.filter(o=>!ids.includes(o.id));db.selected=db.orders[0]?.id||null;save();render('orders')}
+}
+
+function showOrders(f){let el=document.getElementById('page');el.innerHTML=`<div class="panel"><div class="panelhead"><h2>📋 订单</h2><button class="btn primary" onclick="openNewOrder()">＋ 新增订单</button></div>${orderTable(f)}</div>`}
+function customerPage(){return `<div class="panel"><div class="panelhead"><h2>👥 顾客资料</h2><button class="btn primary" onclick="addCustomer()">＋ 新增顾客</button></div>${db.customers.length?`<div class="tablewrap"><table class="table"><thead><tr><th>姓名</th><th>电话</th><th>地址</th><th>订单数</th><th>操作</th></tr></thead><tbody>${db.customers.map(c=>`<tr><td>${esc(c.name)}</td><td>${esc(c.phone)}</td><td>${esc(c.address)}</td><td>${db.orders.filter(o=>o.customer===c.name).length}</td><td><button class="btn small" onclick="editCustomer('${c.id}')">编辑</button> <button class="btn small danger" onclick="deleteCustomer('${c.id}')">删除</button></td></tr>`).join('')}</tbody></table></div>`:'<div class="empty">还没有顾客</div>'}</div>`}
+function addCustomer(){openModal('新增顾客',`<div class="formgrid"><div class="field"><label>姓名</label><input id="c_name"></div><div class="field"><label>电话</label><input id="c_phone"></div><div class="field full"><label>地址</label><textarea id="c_address"></textarea></div></div><div class="footeractions"><button class="btn primary" onclick="saveCustomer()">保存</button></div>`)}
+function saveCustomer(){let n=document.getElementById('c_name').value.trim();if(!n){alert('请输入姓名');return}db.customers.push({id:uid(),name:n,phone:document.getElementById('c_phone').value,address:document.getElementById('c_address').value});save();closeModal();render('customers')}
+
+function editCustomer(id){
+ let c=db.customers.find(x=>x.id===id); if(!c)return;
+ openModal('编辑顾客',`<div class="formgrid">
+ <div class="field"><label>姓名</label><input id="ec_name" value="${esc(c.name)}"></div>
+ <div class="field"><label>电话</label><input id="ec_phone" value="${esc(c.phone)}"></div>
+ <div class="field full"><label>地址</label><textarea id="ec_address" rows="3">${esc(c.address)}</textarea></div>
+ </div><div class="footeractions"><button class="btn primary" onclick="saveCustomerEdit('${id}')">保存修改</button></div>`);
+}
+function saveCustomerEdit(id){
+ let c=db.customers.find(x=>x.id===id); if(!c)return;
+ let oldName=c.name, newName=document.getElementById('ec_name').value.trim();
+ if(!newName)return alert('请输入姓名');
+ c.name=newName;c.phone=document.getElementById('ec_phone').value.trim();c.address=document.getElementById('ec_address').value.trim();
+ db.orders.forEach(o=>{if(o.customer===oldName){o.customer=c.name;o.phone=c.phone;o.address=c.address;}});
+ save();closeModal();render('customers');
+}
+function deleteCustomer(id){
+ let c=db.customers.find(x=>x.id===id); if(!c)return;
+ let used=db.orders.some(o=>o.customer===c.name);
+ let msg=used?'这个顾客已有订单。删除顾客资料不会删除订单，确定继续吗？':'确定删除这个顾客吗？';
+ if(confirm(msg)){db.customers=db.customers.filter(x=>x.id!==id);save();render('customers');}
+}
+function editProduct(id){
+ let p=db.products.find(x=>x.id===id); if(!p)return;
+ openModal('编辑商品',`<div class="formgrid">
+ <div class="field"><label>商品名称</label><input id="ep_name" value="${esc(p.name)}"></div>
+ <div class="field"><label>价格 RM</label><input id="ep_price" type="number" step=".01" value="${p.price}"></div>
+ </div><div class="footeractions"><button class="btn primary" onclick="saveProductEdit('${id}')">保存修改</button></div>`);
+}
+function saveProductEdit(id){
+ let p=db.products.find(x=>x.id===id); if(!p)return;
+ let oldName=p.name,newName=document.getElementById('ep_name').value.trim();
+ if(!newName)return alert('请输入商品名称');
+ p.name=newName;p.price=Number(document.getElementById('ep_price').value)||0;
+ db.orders.forEach(o=>o.items.forEach(i=>{if(i.name===oldName){i.name=newName;i.price=p.price;}}));
+ save();closeModal();render('products');
+}
+
+function productPage(){return `<div class="panel"><div class="panelhead"><h2>📦 商品管理</h2><button class="btn primary" onclick="addProduct()">＋ 新增商品</button></div><table class="table"><thead><tr><th>商品</th><th>单价</th><th>操作</th></tr></thead><tbody>${db.products.map(p=>`<tr><td>${esc(p.name)}</td><td>${money(p.price)}</td><td><button class="btn small" onclick="editProduct('${p.id}')">编辑</button> <button class="btn small danger" onclick="deleteProduct('${p.id}')">删除</button></td></tr>`).join('')}</tbody></table></div>`}
+function addProduct(){openModal('新增商品',`<div class="formgrid"><div class="field"><label>商品名称</label><input id="p_name"></div><div class="field"><label>价格 RM</label><input id="p_price" type="number" step=".01"></div></div><div class="footeractions"><button class="btn primary" onclick="saveProduct()">保存</button></div>`)}
+function saveProduct(){let n=document.getElementById('p_name').value.trim();if(!n)return alert('请输入商品名称');db.products.push({id:uid(),name:n,price:Number(document.getElementById('p_price').value)||0});save();closeModal();render('products')}
+function deleteProduct(id){if(confirm('确定删除商品？')){db.products=db.products.filter(p=>p.id!==id);save();render('products')}}
+function mediaPage(){let files=[];db.orders.forEach(o=>o.media.forEach((m,i)=>files.push({...m,no:o.no,customer:o.customer,oid:o.id,i})));return `<div class="panel"><h2>🖼️ 照片 / 视频库</h2><div class="media" style="margin-top:14px">${files.map(m=>`<div class="item">${m.type==='image'?`<img src="${m.data}">`:`<video src="${m.data}" controls></video>`}<div class="cap"><b>${esc(m.no)}</b><br>${esc(m.name)}<br>${esc(m.customer)}</div></div>`).join('')||'<div class="empty" style="grid-column:1/-1">还没有上传媒体</div>'}</div></div>`}
+function shippingPage(){let arr=db.orders.filter(o=>['ready','shipped'].includes(o.status));return `<div class="panel"><div class="panelhead"><h2>🚚 快递 / Tracking</h2></div><table class="table"><thead><tr><th>订单</th><th>顾客</th><th>地址</th><th>快递</th><th>Tracking</th><th>状态</th></tr></thead><tbody>${arr.map(o=>`<tr onclick="selectOrder('${o.id}');render('dashboard')"><td>${o.no}</td><td>${esc(o.customer)}</td><td>${esc(o.address)}</td><td>${esc(o.courier||'-')}</td><td>${esc(o.tracking||'未输入')}</td><td><span class="status ${statusInfo(o.status)[2]}">${statusInfo(o.status)[1]}</span></td></tr>`).join('')}</tbody></table></div>`}
+function reportPage(){let sales=db.orders.reduce((a,o)=>a+total(o),0),out=db.orders.reduce((a,o)=>a+Math.max(0,total(o)-o.paid),0);return `<div class="cards"><div class="card blue"><small>订单总数</small><b>${db.orders.length}</b></div><div class="card green"><small>订单总金额</small><b>${money(sales)}</b></div><div class="card red"><small>未收余额</small><b>${money(out)}</b></div></div><div class="panel"><div class="panelhead"><h2>📊 简单统计</h2><div><button class="btn" onclick="exportCSV()">⬇️ 导出 CSV</button><button class="btn" onclick="exportData()">⬇️ 备份 JSON</button></div></div><p>已寄出：${db.orders.filter(o=>o.status==='shipped').length} 单</p><p>已完成：${db.orders.filter(o=>o.status==='done').length} 单</p><p>待处理：${db.orders.filter(o=>['new','picking'].includes(o.status)).length} 单</p><p>已上传照片/视频：${db.orders.reduce((a,o)=>a+o.media.length,0)} 个</p></div>`}
+function settingsPage(){return `<div class="panel"><h2>⚙️ 设置 / 数据</h2><div class="notice">当前版本是本机浏览器储存：订单、照片、视频保存在当前浏览器。建议每天备份 JSON；以后如果要多人/多设备同步，再接云端数据库。</div><div class="box"><b>目前资料：</b> ${db.orders.length} 个订单 · ${db.customers.length} 个顾客 · ${db.products.length} 个商品 · ${db.orders.reduce((a,o)=>a+o.media.length,0)} 个照片/视频</div><div class="footeractions"><button class="btn primary" onclick="exportData()">⬇️ 导出备份</button><button class="btn" onclick="document.getElementById('importFile').click()">⬆️ 导入备份</button><button class="btn warn" onclick="clearDemo()">删除示范订单</button><button class="btn danger" onclick="resetData()">清空全部资料</button></div><input id="importFile" class="hide" type="file" accept=".json" onchange="importData(this)"></div>`}
+
+function exportCSV(){
+ let header=['Order No','Date','Customer','Phone','Address','Products','Qty','Shipping','Total','Paid','Balance','Courier','Tracking','Status','Note'];
+ let rows=db.orders.map(o=>[o.no,o.date,o.customer,o.phone,o.address,o.items.map(i=>i.name).join('; '),o.items.reduce((a,i)=>a+i.qty,0),o.shipping,total(o),o.paid,Math.max(0,total(o)-o.paid),o.courier,o.tracking,statusInfo(o.status)[1],o.note]);
+ let csv=[header,...rows].map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
+ let a=document.createElement('a');a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);a.download='orders-'+nowDate()+'.csv';a.click();
+}
+
+function exportData(){let a=document.createElement('a');a.href='data:application/json;charset=utf-8,'+encodeURIComponent(JSON.stringify(db));a.download='order-system-backup-'+nowDate()+'.json';a.click()}
+function importData(inp){let f=inp.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{db=JSON.parse(r.result);save();render('dashboard');alert('备份已导入')}catch(e){alert('备份文件无效')}};r.readAsText(f)}
+function clearDemo(){
+ if(!confirm('删除目前的示范订单？你的其他订单不会被删除。'))return;
+ db.orders=db.orders.filter(o=>!/^ORD-000[1-5]$/.test(o.no));
+ db.selected=db.orders[0]?.id||null;
+ save();render('dashboard');
+}
+function resetData(){if(confirm('确定清空全部订单、顾客、商品和媒体吗？此操作不能恢复。')){localStorage.removeItem(KEY);location.reload()}}
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>render(b.dataset.page));
+document.getElementById('globalSearch').addEventListener('input',()=>{if(document.querySelector('.panel')){let active=document.querySelector('.tabs button.active')?.textContent||'';if(active)render('orders');else render('dashboard')}})
+render('dashboard');
+</script>
+</body>
+</html>
